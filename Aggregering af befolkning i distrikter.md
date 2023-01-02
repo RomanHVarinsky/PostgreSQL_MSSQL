@@ -28,7 +28,7 @@ FROM dbo.CPR_AktivKom_GeoView cpr, k440.dkn_1km_euref89 geom WHERE geom.ogr_geom
 GROUP BY geom.gid, geom.kn1kmdk, geom.ogr_geometry.STAsText()  
 ORDER BY geom.kn1kmdk  
 
-#### Ovenstående har den ulempe, at den både viser totalen og tallet for hver aldersinterval hvis den er større end ti. Så er der kun én aldersinterval med færre end ti personer, kan man godt regne den ud.
+#### Ovenstående har den ulempe, at den både viser totalen og tallet for hver aldersinterval hvis den er større end ti. Så er der kun én aldersinterval med færre end ti personer, kan man godt regne den ud. 
 #### Så hvis en aldersinterval indeholder færre end ti personer, vises kun tallet for totalen. Altså med udgangspunkt at totalen er større end ti:
 SELECT  
 geom.gid,  
