@@ -4,13 +4,21 @@ ogr2ogr -overwrite -f MSSQLSpatial MSSQL:"server=lois.sql.kerteminde.local;drive
 
 ### Denne forespørgsel opsummerer befolkningen i aldersgrupper:
 SELECT
+
 SUM(CASE when pers.alder between 0 and 120 then 1 else 0 end) as total,
+
 SUM(CASE WHEN pers.Alder between 0 and 6 then 1 else 0 end) as antal_0_6,
+
 SUM(CASE WHEN pers.Alder between 7 and 17 then 1 else 0 end) as antal_7_17,
+
 SUM(CASE WHEN pers.Alder between 18 and 24 then 1 else 0 end) as antal_18_24,
+
 SUM(CASE WHEN pers.Alder between 25 and 39 then 1 else 0 end) as antal_25_39,
+
 SUM(CASE WHEN pers.Alder between 40 and 64 then 1 else 0 end) as antal_40_64,
+
 SUM(CASE WHEN pers.Alder >= 65 then 1 else 0 end) as antal_over_65
+
 FROM dbo.CPR_AktivKom_GeoView pers  
 
 ### Forespørgslen kan tilpasses så den ikke viser antallet af borgere i de enkelte celler, hvis der findes færre end ti personer i en bestemt kategori:
