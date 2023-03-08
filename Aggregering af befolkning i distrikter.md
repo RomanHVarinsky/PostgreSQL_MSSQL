@@ -5,7 +5,8 @@ ogr2ogr -overwrite -f MSSQLSpatial MSSQL:"server=lois.sql.kerteminde.local;drive
 ```
 
 #### Denne forespørgsel opsummerer befolkningen i aldersgrupper:
-```html SELECT  
+```html 
+SELECT  
 SUM(CASE when pers.alder between 0 and 120 then 1 else 0 end) as total,  
 SUM(CASE WHEN pers.Alder between 0 and 6 then 1 else 0 end) as antal_0_6,  
 SUM(CASE WHEN pers.Alder between 7 and 17 then 1 else 0 end) as antal_7_17,  
