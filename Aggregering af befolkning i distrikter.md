@@ -12,7 +12,8 @@ SUM(CASE WHEN pers.Alder between 7 and 17 then 1 else 0 end) as antal_7_17,
 SUM(CASE WHEN pers.Alder between 18 and 24 then 1 else 0 end) as antal_18_24,  
 SUM(CASE WHEN pers.Alder between 25 and 39 then 1 else 0 end) as antal_25_39,  
 SUM(CASE WHEN pers.Alder between 40 and 64 then 1 else 0 end) as antal_40_64,  
-SUM(CASE WHEN pers.Alder >= 65 then 1 else 0 end) as antal_over_65  
+SUM(CASE WHEN pers.Alder >= 65 then 1 else 0 end) as antal_over_65,  
+GetDate() as dato
 FROM dbo.CPR_AktivKom_GeoView pers  
 ```
 
@@ -28,6 +29,7 @@ CASE WHEN SUM(CASE WHEN cpr.Alder between 18 and 24 THEN 1 ELSE 0 END)>10 THEN S
 CASE WHEN SUM(CASE WHEN cpr.Alder between 25 and 39 THEN 1 ELSE 0 END)>10 THEN SUM(CASE WHEN cpr.Alder between 25 and 39 THEN 1 ELSE 0 END) ELSE NULL END as Antal_25_39,  
 CASE WHEN SUM(CASE WHEN cpr.Alder between 40 and 64 THEN 1 ELSE 0 END)>10 THEN SUM(CASE WHEN cpr.Alder between 40 and 65 THEN 1 ELSE 0 END) ELSE NULL END as Antal_40_64,  
 CASE WHEN SUM(CASE WHEN cpr.Alder >65 THEN 1 ELSE 0 END)>10 THEN SUM(CASE WHEN cpr.Alder > 65 THEN 1 ELSE 0 END) ELSE NULL END as Antal_over_65,  
+GetDate() as dato,  
 geometry::STGeomFromText(geom.ogr_geometry.STAsText(),25832) as geometri  
 FROM dbo.CPR_AktivKom_GeoView cpr, k440.dkn_1km_euref89 geom WHERE geom.ogr_geometry.STContains(cpr.geometri)=1  
 GROUP BY geom.gid, geom.kn1kmdk, geom.ogr_geometry.STAsText()  
@@ -49,6 +51,7 @@ case when (SUM(CASE WHEN cpr.Alder between 0 and 6 THEN 1 ELSE 0 END)<10 or SUM(
 case when (SUM(CASE WHEN cpr.Alder between 0 and 6 THEN 1 ELSE 0 END)<10 or SUM(CASE WHEN cpr.Alder between 7 and 17 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 18 and 24 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 25 and 39 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 40 and 65 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder > 65 THEN 1 ELSE 0 END)<10) then NULL else sum(CASE WHEN cpr.Alder between 25 and 39 THEN 1 ELSE 0 END) end as antal_25_39,  
 case when (SUM(CASE WHEN cpr.Alder between 0 and 6 THEN 1 ELSE 0 END)<10 or SUM(CASE WHEN cpr.Alder between 7 and 17 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 18 and 24 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 25 and 39 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 40 and 65 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder > 65 THEN 1 ELSE 0 END)<10) then NULL else sum(CASE WHEN cpr.Alder between 40 and 64 THEN 1 ELSE 0 END) end as antal_40_64,  
 case when (SUM(CASE WHEN cpr.Alder between 0 and 6 THEN 1 ELSE 0 END)<10 or SUM(CASE WHEN cpr.Alder between 7 and 17 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 18 and 24 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 25 and 39 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder between 40 and 65 THEN 1 ELSE 0 END)<10 or sum(CASE WHEN cpr.Alder > 65 THEN 1 ELSE 0 END)<10) then NULL else sum(CASE WHEN cpr.Alder > 65 THEN 1 ELSE 0 END) end as antal_over_65,  
+GetDate() as dato,    
 geometry::STGeomFromText(geom.ogr_geometry.STAsText(),25832) as geometri  
 from dbo.CPR_AktivKom_GeoView cpr, k440.dkn_1km_euref89 geom where geom.ogr_geometry.STContains(cpr.geometri)=1  
 group by geom.gid, geom.kn1kmdk, geom.ogr_geometry.STAsText()  
@@ -70,7 +73,8 @@ SUM(CASE WHEN pers.Alder between 7 and 17 then 1 else 0 end) as antal_7_17,
 SUM(CASE WHEN pers.Alder between 18 and 24 then 1 else 0 end) as antal_18_24,  
 SUM(CASE WHEN pers.Alder between 25 and 39 then 1 else 0 end) as antal_25_39,  
 SUM(CASE WHEN pers.Alder between 40 and 64 then 1 else 0 end) as antal_40_64,  
-SUM(CASE WHEN pers.Alder >= 65 then 1 else 0 end) as antal_over_65  
+SUM(CASE WHEN pers.Alder >= 65 then 1 else 0 end) as antal_over_65,  
+GetDate() as dato  
 FROM dbo.CPR_AktivKom_GeoView pers   
 right join k440.bredbaand1_xls x on pers.AdgAdr_id=x.adgadr_id  
 GROUP BY x.listetype  
